@@ -28,24 +28,16 @@ class TurmaController extends Controller
     // Armazenar nova turma
     public function store(Request $request)
     {
-        $request->validate([
-            'cod_turma'   => 'required|string|unique:turmas,cod_turma',
-            'curso'       => 'required|string',
-            'periodo'     => 'required|string',
-            'disciplina'  => 'required|string',
-            'turno'       => 'required|string',
-            'professor_id'=> 'required|exists:professores,id',
-            'alunos'      => 'nullable|array',
-            'alunos.*'    => 'exists:alunos,id',
+        $validated = $request->validate([
+            'cod_turma' => 'required|string|max:255',
+            'curso' => 'required|string|max:255',
+            'periodo' => 'required|integer|min:1|max:6',
+            'disciplina' => 'required|string|max:255',
+            'turno' => 'required|string|max:255',
+            'professor_id' => 'required|exists:professores,id',
         ]);
 
-        $turma = Turma::create($request->only([
-            'cod_turma', 'curso', 'periodo', 'disciplina', 'turno', 'professor_id'
-        ]));
-
-        if ($request->has('alunos')) {
-            $turma->alunos()->attach($request->alunos);
-        }
+        Turma::create($validated);
 
         return redirect()->route('turmas.index')->with('success', 'Turma criada com sucesso!');
     }
@@ -64,18 +56,23 @@ class TurmaController extends Controller
         $turma = Turma::findOrFail($id);
 
         $request->validate([
-            'cod_turma'   => 'required|string|unique:turmas,cod_turma,' . $turma->id,
-            'curso'       => 'required|string',
-            'periodo'     => 'required|string',
-            'disciplina'  => 'required|string',
-            'turno'       => 'required|string',
-            'professor_id'=> 'required|exists:professores,id',
-            'alunos'      => 'nullable|array',
-            'alunos.*'    => 'exists:alunos,id',
+            'cod_turma' => 'required|string|unique:turmas,cod_turma,' . $turma->id,
+            'curso' => 'required|string',
+            'periodo' => 'required|string',
+            'disciplina' => 'required|string',
+            'turno' => 'required|string',
+            'professor_id' => 'required|exists:professores,id',
+            'alunos' => 'nullable|array',
+            'alunos.*' => 'exists:alunos,id',
         ]);
 
         $turma->update($request->only([
-            'cod_turma', 'curso', 'periodo', 'disciplina', 'turno', 'professor_id'
+            'cod_turma',
+            'curso',
+            'periodo',
+            'disciplina',
+            'turno',
+            'professor_id'
         ]));
 
         $turma->alunos()->sync($request->alunos ?? []);
