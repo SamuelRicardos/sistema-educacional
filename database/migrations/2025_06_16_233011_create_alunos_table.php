@@ -12,10 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('alunos', function (Blueprint $table) {
-        $table->id();
-        $table->string('nome');
-        $table->string('email')->unique();
-        $table->timestamps();
+            $table->id();
+            $table->string('nome');
+            $table->string('email')->unique();
+            $table->string('cpf', 11)->unique();
+            $table->string('matricula')->unique();
+            $table->string('periodo');
+            $table->enum('curso', ['Informática', 'Administração', 'Enfermagem', 'Eletrotécnica']);
+            $table->enum('turno', ['Matutino', 'Vespertino', 'Noturno']);
+            $table->enum('status', ['ativo', 'inativo'])->default('ativo');
+            $table->timestamps();
         });
     }
 

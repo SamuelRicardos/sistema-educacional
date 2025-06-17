@@ -9,6 +9,12 @@ class Aluno extends Model
     //
     protected $fillable = [
         'nome',
-        'email'
+        'email',
+        'periodo',
+        'curso',
+        'status',
+        'turno',
+        'matricula',
+        'cpf',
     ];
 }
