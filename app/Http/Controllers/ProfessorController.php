@@ -71,4 +71,18 @@ class ProfessorController extends Controller
         return redirect()->route('professores.index')
                          ->with('success', 'Professor excluído com sucesso!');
     }
+
+public function apiList()
+{
+    try {
+        $professores = Professor::all(['id', 'nome']);
+
+        \Log::info('Professores retornados pela API:', $professores->toArray());
+
+        return response()->json($professores);
+    } catch (\Exception $e) {
+        \Log::error('Erro ao buscar professores: ' . $e->getMessage());
+        return response()->json(['message' => 'Erro ao buscar professores'], 500);
+    }
+}
 }

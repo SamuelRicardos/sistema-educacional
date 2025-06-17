@@ -25,3 +25,4 @@ Route::post('/professores', [ProfessorController::class, 'store'])->name('profes
 Route::get('/professores/{professor}/edit', [ProfessorController::class, 'edit'])->name('professores.edit');
 Route::put('/professores/{professor}', [ProfessorController::class, 'update'])->name('professores.update');
 Route::delete('/professores/{professor}', [ProfessorController::class, 'destroy'])->name('professores.destroy');
+Route::get('/api/professores', [ProfessorController::class, 'apiList'])->name('api.professores.list');

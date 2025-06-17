@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('cod_turma')->unique();
             $table->enum('curso', ['Informática', 'Administração', 'Enfermagem', 'Eletrotécnica']);
-            $table->enum('periodo', ['MATUTINO', 'VESPERTINO', 'NOTURNO']);
+            $table->integer('periodo', );
             $table->string('disciplina');
-            $table->string('turno');
+            $table->enum('turno', ['MATUTINO', 'VESPERTINO', 'NOTURNO']);
             $table->foreignId('professor_id')->constrained('professores')->onDelete('cascade');
             $table->timestamps();
         });
