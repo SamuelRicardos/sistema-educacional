@@ -12,11 +12,15 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
     <div class="container">
         <a class="navbar-brand" href="#">Sistema Educacional</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>        
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ route('alunos.index') }}">Alunos</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a></li>
-                <li class="nav-item"><a class="nav-link active" href="{{ route('professores.index') }}">Professores</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('turma.index') }}">Turmas</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ route('professores.index') }}">Professores</a></li>
             </ul>
         </div>
     </div>
@@ -37,6 +41,8 @@
                 <tr>
                     <th>Nome</th>
                     <th>Email</th>
+                    <th>CPF</th>
+                    <th>Matrícula</th>
                     <th class="text-end">Ações</th>
                 </tr>
             </thead>
@@ -45,14 +51,18 @@
                     <tr>
                         <td>{{ $professor->nome }}</td>
                         <td>{{ $professor->email }}</td>
+                        <td>{{ $professor->cpf }}</td>
+                        <td>{{ $professor->matricula }}</td>
                         <td class="text-end">
-                            <a href="{{ route('professores.edit', $professor->id) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('professores.edit', $professor->id) }}" class="btn btn-sm btn-warning" title="Editar">
                                 <i class="bi bi-pencil-fill"></i>
                             </a>
-                            <form method="POST" action="{{ route('professores.destroy', $professor->id) }}" class="d-inline" onsubmit="return confirm('Deseja excluir?')">
+                            <form method="POST" action="{{ route('professores.destroy', $professor->id) }}" class="d-inline" onsubmit="return confirm('Deseja excluir este professor?')">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i></button>
+                                <button class="btn btn-sm btn-danger" title="Excluir">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
                             </form>
                         </td>
                     </tr>

@@ -16,9 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('email')->unique();
             $table->string('cpf')->unique();
-            $table->string('turno');
-            $table->string('periodo');
-            $table->string('curso');
+            $table->string('matricula')->unique();
             $table->timestamps();
         });
     }

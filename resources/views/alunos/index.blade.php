@@ -23,7 +23,7 @@
                     <a class="nav-link active" href="{{ route('alunos.index') }}">Alunos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('cursos.index') }}">Cursos</a>
+                    <a class="nav-link" href="{{ route('turma.index') }}">Cursos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('professores.index') }}">Professores</a>

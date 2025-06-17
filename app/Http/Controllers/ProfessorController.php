@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ProfessorController extends Controller
 {
- // Listagem
+// Listagem
     public function index()
     {
         $professores = Professor::all();
@@ -28,11 +28,10 @@ class ProfessorController extends Controller
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:professores,email',
             'cpf' => 'required|string|unique:professores,cpf',
-            'periodo' => 'required|string|max:50',
-            'curso' => 'required|string|max:255',
+            'matricula' => 'required|string|unique:professores,matricula',
         ]);
 
-        Professor::create($request->all());
+        Professor::create($request->only(['nome', 'email', 'cpf', 'matricula']));
 
         return redirect()->route('professores.index')
                          ->with('success', 'Professor cadastrado com sucesso!');
@@ -54,11 +53,10 @@ class ProfessorController extends Controller
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:professores,email,' . $professor->id,
             'cpf' => 'required|string|unique:professores,cpf,' . $professor->id,
-            'periodo' => 'required|string|max:50',
-            'curso' => 'required|string|max:255',
+            'matricula' => 'required|string|unique:professores,matricula,' . $professor->id,
         ]);
 
-        $professor->update($request->all());
+        $professor->update($request->only(['nome', 'email', 'cpf', 'matricula']));
 
         return redirect()->route('professores.index')
                          ->with('success', 'Professor atualizado com sucesso!');
