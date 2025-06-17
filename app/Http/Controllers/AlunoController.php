@@ -35,7 +35,8 @@ class AlunoController extends Controller
             'nome', 'email', 'cpf', 'matricula', 'periodo', 'curso', 'turno', 'status'
         ]));
 
-        return redirect()->back()->with('success', 'Aluno cadastrado com sucesso!');
+            return redirect()->route('alunos.index')
+                     ->with('success', 'Aluno cadastrado com sucesso!');
     }
 
     public function destroy(Aluno $aluno)

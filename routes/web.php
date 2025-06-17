@@ -12,12 +12,12 @@ Route::delete('/alunos/{aluno}', [AlunoController::class, 'destroy'])->name('alu
 Route::get('/alunos/{aluno}/edit', [AlunoController::class, 'edit'])->name('alunos.edit');
 Route::put('/alunos/{aluno}', [AlunoController::class, 'update'])->name('alunos.update');
 
-Route::get('/turma', [TurmaController::class, 'index'])->name('turma.index');
-Route::get('/turma/create', [TurmaController::class, 'create'])->name('turma.create');
-Route::post('/turma', [TurmaController::class, 'store'])->name('turma.store');
-Route::get('/turma/{turma}/edit', [TurmaController::class, 'edit'])->name('turma.edit');
-Route::put('/turma/{turma}', [TurmaController::class, 'update'])->name('turma.update'); 
-Route::delete('/turma/{turma}', [TurmaController::class, 'destroy'])->name('turma.destroy');
+Route::get('/turma', [TurmaController::class, 'index'])->name('turmas.index');
+Route::get('/turma/create', [TurmaController::class, 'create'])->name('turmas.create');
+Route::post('/turma', [TurmaController::class, 'store'])->name('turmas.store');
+Route::get('/turma/{turma}/edit', [TurmaController::class, 'edit'])->name('turmas.edit');
+Route::put('/turma/{turma}', [TurmaController::class, 'update'])->name('turmas.update'); 
+Route::delete('/turma/{turma}', [TurmaController::class, 'destroy'])->name('turmas.destroy');
 
 Route::get('/professores', [ProfessorController::class, 'index'])->name('professores.index');
 Route::get('/professores/create', [ProfessorController::class, 'create'])->name('professores.create');

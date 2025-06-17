@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br" x-data="professorForm()" x-init="init()" >
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cadastrar Professor</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
   <style>
     @media (max-width: 576px) {
       form > div {
@@ -13,8 +12,6 @@
       }
     }
   </style>
-  <!-- Token CSRF para Laravel -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="bg-light">
 
@@ -27,7 +24,18 @@
 <div class="container">
   <h1 class="mb-4">Cadastrar Professor</h1>
 
-  <form @submit.prevent="submitForm" novalidate class="needs-validation" :class="{ 'was-validated': validated }">
+  @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul class="mb-0">
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif
+
+  <form method="POST" action="{{ route('professores.store') }}" class="needs-validation" novalidate>
+    @csrf
 
     <div class="mb-3">
       <label for="nome" class="form-label">Nome do Professor</label>
@@ -35,11 +43,9 @@
         type="text" 
         id="nome" 
         name="nome" 
-        class="form-control" 
-        x-model="nome" 
-        placeholder="Digite o nome do professor" 
-        required 
-        :class="{'is-invalid': validated && !nome.trim()}"
+        class="form-control @error('nome') is-invalid @enderror" 
+        value="{{ old('nome') }}" 
+        required
       />
       <div class="invalid-feedback">Por favor, informe o nome do professor.</div>
     </div>
@@ -50,13 +56,11 @@
         type="email" 
         id="email" 
         name="email" 
-        class="form-control" 
-        x-model="email" 
-        placeholder="exemplo@email.com" 
+        class="form-control @error('email') is-invalid @enderror" 
+        value="{{ old('email') }}" 
         required
-        :class="{'is-invalid': validated && !validEmail(email)}"
       />
-      <div class="invalid-feedback">Por favor, informe um email válido.</div>
+      <div class="invalid-feedback">Por favor, informe um e-mail válido.</div>
     </div>
 
     <div class="mb-3">
@@ -65,118 +69,46 @@
         type="text" 
         id="cpf" 
         name="cpf" 
-        class="form-control" 
-        x-model="cpf" 
-        placeholder="Digite o CPF (somente números)" 
-        required 
-        maxlength="11"
-        :class="{'is-invalid': validated && !validCPF(cpf)}"
-      />
-      <div class="invalid-feedback">Por favor, informe um CPF válido (11 dígitos).</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="periodo" class="form-label">Período</label>
-      <input 
-        type="number" 
-        id="periodo" 
-        name="periodo" 
-        class="form-control" 
-        x-model="periodo" 
-        placeholder="Digite o período (ex: Matutino, Vespertino)" 
+        class="form-control @error('cpf') is-invalid @enderror" 
+        value="{{ old('cpf') }}" 
+        maxlength="11" 
         required
-        :class="{'is-invalid': validated && !periodo.trim()}"
       />
-      <div class="invalid-feedback">Por favor, informe o período.</div>
+      <div class="invalid-feedback">Por favor, informe um CPF válido com 11 dígitos.</div>
     </div>
 
     <div class="mb-3">
-      <label for="curso" class="form-label">Curso</label>
+      <label for="matricula" class="form-label">Matrícula</label>
       <input 
         type="text" 
-        id="curso" 
-        name="curso" 
-        class="form-control" 
-        x-model="curso" 
-        placeholder="Digite o curso" 
+        id="matricula" 
+        name="matricula" 
+        class="form-control @error('matricula') is-invalid @enderror" 
+        value="{{ old('matricula') }}" 
         required
-        :class="{'is-invalid': validated && !curso.trim()}"
       />
-      <div class="invalid-feedback">Por favor, informe o curso.</div>
+      <div class="invalid-feedback">Por favor, informe a matrícula.</div>
     </div>
 
     <button type="submit" class="btn btn-primary">Cadastrar</button>
-    <a href="/professores" class="btn btn-secondary ms-2">Cancelar</a>
+    <a href="{{ route('professores.index') }}" class="btn btn-secondary ms-2">Cancelar</a>
   </form>
 </div>
 
 <script>
-  function professorForm() {
-    return {
-      nome: '',
-      email: '',
-      cpf: '',
-      periodo: '',
-      curso: '',
-      validated: false,
-
-      init() {
-        // pega o token CSRF do meta
-        this.csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-      },
-
-      validEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-      },
-
-      validCPF(cpf) {
-        return /^\d{11}$/.test(cpf);
-      },
-
-      async submitForm() {
-        this.validated = true;
-
-        if (
-          this.nome.trim() &&
-          this.validEmail(this.email) &&
-          this.validCPF(this.cpf) &&
-          this.periodo.trim() &&
-          this.curso.trim()
-        ) {
-          // Monta o corpo da requisição
-          const data = {
-            nome: this.nome,
-            email: this.email,
-            cpf: this.cpf,
-            periodo: this.periodo,
-            curso: this.curso,
-          };
-
-          try {
-            const response = await fetch('/professores', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': this.csrfToken,
-              },
-              body: JSON.stringify(data)
-            });
-
-            if (response.ok) {
-              // Redireciona para a lista de professores
-              window.location.href = '/professores';
-            } else {
-              const errorData = await response.json();
-              alert('Erro ao cadastrar professor: ' + (errorData.message || 'Erro desconhecido'));
-            }
-          } catch (error) {
-            alert('Erro na requisição: ' + error.message);
-          }
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
         }
-      }
-    }
-  }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

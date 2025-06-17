@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ route('alunos.index') }}">Alunos</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('turma.index') }}">Turmas</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('turmas.index') }}">Turmas</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ route('professores.index') }}">Professores</a></li>
             </ul>
         </div>

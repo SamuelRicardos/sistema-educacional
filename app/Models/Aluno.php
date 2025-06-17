@@ -17,4 +17,9 @@ class Aluno extends Model
         'matricula',
         'cpf',
     ];
+
+        public function turmas()
+    {
+        return $this->belongsToMany(Turma::class, 'turma_aluno', 'aluno_id', 'turma_id');
+    }
 }
