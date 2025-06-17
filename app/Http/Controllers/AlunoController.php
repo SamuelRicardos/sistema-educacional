@@ -8,7 +8,7 @@ use App\Models\Aluno;
 
 class AlunoController extends Controller
 {
-   public function index()
+    public function index()
     {
         $alunos = Aluno::all();
         return view('alunos.index', compact('alunos'));
@@ -29,5 +29,21 @@ class AlunoController extends Controller
     {
         $aluno->delete();
         return redirect()->back()->with('success', 'Aluno removido com sucesso!');
+    }
+
+    public function edit(Aluno $aluno)
+    {
+        return view('alunos.edit', compact('aluno'));
+    }
+
+    public function update(Request $request, Aluno $aluno)
+    {
+        $request->validate([
+            'nome' => 'required',
+            'email' => 'required|email|unique:alunos,email,' . $aluno->id,
+        ]);
+
+        $aluno->update($request->only(['nome', 'email']));
+        return redirect()->route('alunos.index')->with('success', 'Aluno atualizado com sucesso!');
     }
 }

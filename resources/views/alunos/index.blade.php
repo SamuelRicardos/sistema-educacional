@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Importante para mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
     <title>Gestão de Alunos</title>
@@ -11,7 +11,6 @@
 
 <body class="bg-light">
 
-    <!-- Navbar responsiva -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
             <a class="navbar-brand" href="#">Sistema Educacional</a>
@@ -66,11 +65,16 @@
                     <li
                         class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
                         <span>{{ $aluno->nome }} ({{ $aluno->email }})</span>
-                        <form method="POST" action="{{ route('alunos.destroy', $aluno->id) }}" class="text-end">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
-                        </form>
+
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('alunos.edit', $aluno->id) }}" class="btn btn-sm btn-warning">Editar</a>
+
+                            <form method="POST" action="{{ route('alunos.destroy', $aluno->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                            </form>
+                        </div>
                     </li>
                 @endforeach
             </ul>
