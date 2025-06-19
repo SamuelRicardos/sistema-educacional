@@ -1,61 +1,68 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 🎓 Sistema de Gestão Educacional
 
-## About Laravel
+Sistema completo de gerenciamento de **turmas, professores e alunos**, desenvolvido com **Laravel 12** no back-end e **Bootstrap 5 + Alpine.js** no front-end. A aplicação permite o cadastro, edição e listagem dinâmica de dados escolares, com integração direta com banco de dados MySQL.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Funcionalidades
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Cadastro de professores, turmas e alunos.
+- Associação de alunos a turmas (many-to-many).
+- Associação de professores a turmas (many-to-one).
+- Interface amigável e responsiva.
+- Interações dinâmicas com Alpine.js.
+- Validação de dados no Laravel.
+- Gerenciamento via painel web.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🧰 Tecnologias Utilizadas
 
-## Learning Laravel
+- **PHP** (Laravel 12)
+- **MySQL**
+- **Bootstrap 5**
+- **Alpine.js**
+- **Blade (Laravel Views)**
+- **Git + GitHub**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🗂️ Estrutura de Rotas
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Professores
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Método | Rota                | Descrição                        |
+|--------|---------------------|----------------------------------|
+| GET    | `/professores`      | Listar todos os professores      |
+| GET    | `/professores/create` | Formulário de novo professor     |
+| POST   | `/professores`      | Armazenar novo professor         |
+| GET    | `/professores/{id}/edit` | Editar professor existente    |
+| PUT    | `/professores/{id}` | Atualizar professor              |
+| DELETE | `/professores/{id}` | Remover professor                |
 
-## Laravel Sponsors
+### Alunos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Método | Rota                | Descrição                        |
+|--------|---------------------|----------------------------------|
+| GET    | `/alunos`           | Listar todos os alunos           |
+| GET    | `/alunos/create`    | Formulário de novo aluno         |
+| POST   | `/alunos`           | Armazenar novo aluno             |
+| GET    | `/alunos/{id}/edit` | Editar aluno existente           |
+| PUT    | `/alunos/{id}`      | Atualizar aluno                  |
+| DELETE | `/alunos/{id}`      | Remover aluno                    |
 
-### Premium Partners
+### Turmas
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+| Método | Rota                   | Descrição                          |
+|--------|------------------------|------------------------------------|
+| GET    | `/turmas`              | Listar todas as turmas             |
+| GET    | `/turmas/create`       | Formulário de nova turma           |
+| POST   | `/turmas`              | Armazenar nova turma               |
+| GET    | `/turmas/{id}/edit`    | Editar turma existente             |
+| PUT    | `/turmas/{id}`         | Atualizar turma                    |
+| DELETE | `/turmas/{id}`         | Remover turma                      |
 
-## Contributing
+> 💡 **Observação**: As rotas estão definidas no `web.php` utilizando o resource controller (`Route::resource()`).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## ⚙️ Como executar
 
-## Code of Conduct
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/SamuelRicardos/sistema-educacional.git
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
